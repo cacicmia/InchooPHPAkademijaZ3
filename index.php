@@ -45,6 +45,24 @@ $style=<<<EOT
     padding:2em;
 
   }
+  label {
+  margin: 1em;
+  }
+  #x,
+  #y{
+  display:block;
+  border: 1px solid #999;
+  border-radius: 2em;
+   margin: 1em ;
+    
+  }
+  #z{
+    color: #EEE;
+    padding: 1em;
+    background-color: #095;
+    margin: 2em;
+    border-radius: 2em;
+  }
 </style> 
 EOT;
 
@@ -68,7 +86,7 @@ EOT;
     <p><label for="y">Broj redova:
         <input type="number" id="y" name="y">
     </label></p>
-    <input type="submit" value="Prikaži matricu">
+    <input id="z" type="submit" value="Prikaži matricu">
 </form>
 <table id="matrix">
 <?php
@@ -88,7 +106,7 @@ $order=function(int $n): array
     }
     return $arr;
 };
-echo print_r($order($n));
+//echo print_r($order($n));
 ?>
 </table>
 </div>
