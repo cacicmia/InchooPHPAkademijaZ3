@@ -10,6 +10,22 @@ ini_set("display_errors", 1);
 declare(strict_type=1);
 $style=<<<EOT
 <style>
+table {
+    border-collapse: collapse;
+  }
+  table, th, td {
+    border: 1px solid black;
+  }
+  td{
+    min-width: 25px;
+    min-height: 25px;
+    text-align: right;
+  }
+  td:empty:after {
+    content: ".";
+    color: transparent;
+    visibility: hidden;
+  }
 </style> 
 EOT;
 
@@ -35,7 +51,20 @@ EOT;
     <input type="submit" value="Prikaži matricu">
 </form>
 <table>
+<?php
+// declare number of rows and columns
+$x=(int)htmlspecialchars($_POST['x']);
+$y=(int)htmlspecialchars($_POST['y']);
 
+if ($x && $y){
+    $n=$x*$y;
+}
+echo "n je ". $n;
+//$order=function(int $n): array
+//{
+//
+//}
+?>
 </table>
 
 </body>
