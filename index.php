@@ -129,7 +129,14 @@ $y=(int)htmlspecialchars($_POST['y']);
       return $table;
    }
 $table=setElements($x,$y);
-print_r($table);
+for ($i=0;$i<$x; $i++) {
+    echo "<tr>";
+    for ($j=0; $j<$y; $j++) {
+        $v=array_search("{$i},{$j}",$table)+1;
+        echo "<td>{$v}</td>";
+    }
+    echo "</tr>";
+}
 
 ?>
 </table>
