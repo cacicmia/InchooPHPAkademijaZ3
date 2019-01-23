@@ -54,7 +54,8 @@ $style=<<<EOT
   border: 1px solid #999;
   border-radius: 2em;
    margin: 1em ;
-    
+   text-align:center;
+      
   }
   #z{
     color: #EEE;
@@ -81,10 +82,10 @@ EOT;
 <div class="clearfix">
 <form id="form" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
     <p><label for="x">Broj stupaca:
-        <input type="number" id="x" name="x">
+        <input type="number" id="x" name="x" value="4">
     </label></p>
     <p><label for="y">Broj redova:
-        <input type="number" id="y" name="y">
+        <input type="number" id="y" name="y" value="4">
     </label></p>
     <input id="z" type="submit" value="Prikaži matricu">
 </form>
@@ -94,19 +95,42 @@ EOT;
 $x=(int)htmlspecialchars($_POST['x']);
 $y=(int)htmlspecialchars($_POST['y']);
 
-if ($x && $y){
-    $n=$x*$y;
-}
-//function returns an array of elements supposed to form the table
-$order=function(int $n): array
-{
-    $arr=[];
-    for( $i=0; $i<$n; $i++) {
-        $arr[]=$i+1;
-    }
-    return $arr;
-};
-//echo print_r($order($n));
+//function
+   function setElements(int $x,int $y){
+       $posX=0;
+       $posY=0;
+       $lastRow=$y-1;
+       $lastCol= $x-1;
+       $table=[];
+      while($posX<=$lastRow && $posY<=$lastCol){
+
+          for ($i=$posY; $i<=$lastCol; $i++){
+              $table[]="{$posX},{$i}";
+          }
+          $posX++;
+          for ($i=$posX; $i<=$lastRow; $i++){
+              $table[]="{$i},{$lastCol}";
+          }
+          $lastCol--;
+          if ($posX<=$lastRow){
+              for ($i=$lastCol; $i>=$posY; $i--){
+                  $table[]="{$lastRow},{$i}";
+              }
+              $lastRow--;
+          }
+          if ($posY<=$lastCol){
+              for($i=$lastRow; $i>=$posX; $i--){
+                  $table[]="{$i},{$posY}";
+              }
+              $posY++;
+          }
+
+      }
+      return $table;
+   }
+$table=setElements($x,$y);
+print_r($table);
+
 ?>
 </table>
 </div>
