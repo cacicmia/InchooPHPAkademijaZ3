@@ -82,62 +82,68 @@ EOT;
 <div class="clearfix">
 <form id="form" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
     <p><label for="x">Broj stupaca:
-        <input type="number" id="x" name="x" value="4">
+        <input type="number" id="x" name="x" value="<?php echo $_POST['x'] ?? 4; ?>">
     </label></p>
     <p><label for="y">Broj redova:
-        <input type="number" id="y" name="y" value="4">
+        <input type="number" id="y" name="y" value="<?php echo $_POST['y'] ?? 4; ?>">
     </label></p>
     <input id="z" type="submit" value="Prikaži matricu">
+
 </form>
 <table id="matrix">
 <?php
+if ($_POST['x']<2 || $_POST['y']<2){
+    echo "Iznos parametra x i y mora biti najmanje 2.";
+} else {
 // declare number of rows and columns
-$x=(int)htmlspecialchars($_POST['x']);
-$y=(int)htmlspecialchars($_POST['y']);
+    $x = (int)htmlspecialchars($_POST['x']);
+    $y = (int)htmlspecialchars($_POST['y']);
 
 //function
-   function setElements(int $x,int $y){
-       $posX=0;
-       $posY=0;
-       $lastRow=$y-1;
-       $lastCol= $x-1;
-       $table=[];
-      while($posX<=$lastRow && $posY<=$lastCol){
+    function setElements(int $x, int $y)
+    {
+        $posX = 0;
+        $posY = 0;
+        $lastRow = $y - 1;
+        $lastCol = $x - 1;
+        $table = [];
+        while ($posX <= $lastRow && $posY <= $lastCol) {
 
-          for ($i=$posY; $i<=$lastCol; $i++){
-              $table[]="{$posX},{$i}";
-          }
-          $posX++;
-          for ($i=$posX; $i<=$lastRow; $i++){
-              $table[]="{$i},{$lastCol}";
-          }
-          $lastCol--;
-          if ($posX<=$lastRow){
-              for ($i=$lastCol; $i>=$posY; $i--){
-                  $table[]="{$lastRow},{$i}";
-              }
-              $lastRow--;
-          }
-          if ($posY<=$lastCol){
-              for($i=$lastRow; $i>=$posX; $i--){
-                  $table[]="{$i},{$posY}";
-              }
-              $posY++;
-          }
+            for ($i = $posY; $i <= $lastCol; $i++) {
+                $table[] = "{$posX},{$i}";
+            }
+            $posX++;
+            for ($i = $posX; $i <= $lastRow; $i++) {
+                $table[] = "{$i},{$lastCol}";
+            }
+            $lastCol--;
+            if ($posX <= $lastRow) {
+                for ($i = $lastCol; $i >= $posY; $i--) {
+                    $table[] = "{$lastRow},{$i}";
+                }
+                $lastRow--;
+            }
+            if ($posY <= $lastCol) {
+                for ($i = $lastRow; $i >= $posX; $i--) {
+                    $table[] = "{$i},{$posY}";
+                }
+                $posY++;
+            }
 
-      }
-      return $table;
-   }
-$table=setElements($x,$y);
-for ($i=0;$i<$x; $i++) {
-    echo "<tr>";
-    for ($j=0; $j<$y; $j++) {
-        $v=array_search("{$i},{$j}",$table)+1;
-        echo "<td>{$v}</td>";
+        }
+        return $table;
     }
-    echo "</tr>";
-}
 
+    $table = setElements($x, $y);
+    for ($i = 0; $i < $x; $i++) {
+        echo "<tr>";
+        for ($j = 0; $j < $y; $j++) {
+            $v = array_search("{$i},{$j}", $table) + 1;
+            echo "<td>{$v}</td>";
+        }
+        echo "</tr>";
+    }
+}
 ?>
 </table>
 </div>
