@@ -6,8 +6,9 @@ body {
     width: 40%;
 }
 #matrix {
-    width:60%;
+    width:55%;
     padding: 2em;
+    margin: 1em;
 }
 
 #matrix td {
@@ -21,11 +22,12 @@ body {
 }
 
 .clearfix:after {
-    content:" ";
     clear: both;
     display:block;
-
+    content:" ";
 }
+
+
 #matrix,
 #form {
     float: left;
@@ -51,4 +53,21 @@ label {
     background-color: #095;
     margin: 2em;
     border-radius: 2em;
+}
+@media (max-width: 767px){
+    .clearfix{
+        display: flex;
+        flex-flow: column;
+    }
+    #form{
+        margin: 0 auto;
+        width: auto;
+
+    }
+    #matrix{
+
+        margin: 0 auto;
+        max-width: 100%;
+        align-self: center;
+    }
 }

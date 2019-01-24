@@ -23,10 +23,10 @@ declare(strict_type=1);
 <body>
 <div class="clearfix">
 <form id="form" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
-    <p><label for="x">Broj stupaca:
+    <p><label for="x">Broj redova:
         <input type="number" id="x" name="x" value="<?php echo $_POST['x'] ?? 4; ?>">
     </label></p>
-    <p><label for="y">Broj redova:
+    <p><label for="y">Broj stupaca:
         <input type="number" id="y" name="y" value="<?php echo $_POST['y'] ?? 4; ?>">
     </label></p>
     <input id="z" type="submit" value="Prikaži matricu">
@@ -39,12 +39,17 @@ declare(strict_type=1);
     $x = (int)htmlspecialchars($_POST['x']);
     $y = (int)htmlspecialchars($_POST['y']);
 
-//function
-    function setElements(int $x, int $y): array
+
+/**
+ * @param int $x equals mathematical y, number of lines
+ * @param int $y equals mathematical x, number of columns
+ * @return array containing strings with x,y coordinates
+ */
+function setElements(int $x, int $y): array
     {
         $posX = 0;
         $posY = 0;
-        $lastRow = $x - 1;
+        $lastRow = $x- 1;
         $lastCol = $y - 1;
         $table = [];
         while ($posY <= $lastRow && $posX <= $lastCol) {
@@ -73,7 +78,7 @@ declare(strict_type=1);
         }
         return $table;
     }
-
+//generate HTML of the table
     $table = setElements($x, $y);
     for ($i = 0; $i < $x; $i++) {
         echo "<tr>";
