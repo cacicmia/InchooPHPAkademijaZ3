@@ -8,64 +8,6 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 declare(strict_type=1);
-$style=<<<EOT
-<style>
-  body {
-    background-color: #222;
-    color: #EEE;
-  }
-  #form {
-    width: 40%;
-  }
-  #matrix { 
-    width:60%;
-    padding: 2em;
-      }
- 
-  #matrix td {
-   min-width: 25px;
-   min-height: 25px;
-   text-align: center;
-   padding: 0.2em;
-   background-color: #555;
-   border: 1px solid #EEE;
-   border-radius: 2em;
-   }
-    
-  .clearfix:after {
-    content=" ";
-    clear: both;
-    display:block;
-    
-   }
-  #matrix,
-  #form {
-    float: left;
-    box-sizing: border-box;
-    padding:2em;
-
-  }
-  label {
-  margin: 1em;
-  }
-  #x,
-  #y{
-  display:block;
-  border: 1px solid #999;
-  border-radius: 2em;
-   margin: 1em ;
-   text-align:center;
-      
-  }
-  #z{
-    color: #EEE;
-    padding: 1em;
-    background-color: #095;
-    margin: 2em;
-    border-radius: 2em;
-  }
-</style> 
-EOT;
 
 ?>
 <!doctype html>
@@ -76,7 +18,7 @@ EOT;
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Z3</title>
-    <?php echo $style ?>
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
 <div class="clearfix">
