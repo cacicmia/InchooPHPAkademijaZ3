@@ -17,21 +17,21 @@ $style=<<<EOT
   #form {
     width: 40%;
   }
-  #matrix {
-    
-    border-collapse: collapse;
+  #matrix { 
     width:60%;
-  }
+    padding: 2em;
+      }
  
-  table, th, td {
-    border: 1px solid #EEE;
-    border-radius: 10px;
-  }
-  td {
-    min-width: 25px;
-    min-height: 25px;
-    text-align: right;
-  }
+  #matrix td {
+   min-width: 25px;
+   min-height: 25px;
+   text-align: center;
+   padding: 0.2em;
+   background-color: #555;
+   border: 1px solid #EEE;
+   border-radius: 2em;
+   }
+    
   .clearfix:after {
     content=" ";
     clear: both;
@@ -92,42 +92,40 @@ EOT;
 </form>
 <table id="matrix">
 <?php
-if ($_POST['x']<2 || $_POST['y']<2){
-    echo "Iznos parametra x i y mora biti najmanje 2.";
-} else {
+
 // declare number of rows and columns
     $x = (int)htmlspecialchars($_POST['x']);
     $y = (int)htmlspecialchars($_POST['y']);
 
 //function
-    function setElements(int $x, int $y)
+    function setElements(int $x, int $y): array
     {
         $posX = 0;
         $posY = 0;
-        $lastRow = $y - 1;
-        $lastCol = $x - 1;
+        $lastRow = $x - 1;
+        $lastCol = $y - 1;
         $table = [];
-        while ($posX <= $lastRow && $posY <= $lastCol) {
+        while ($posY <= $lastRow && $posX <= $lastCol) {
 
-            for ($i = $posY; $i <= $lastCol; $i++) {
-                $table[] = "{$posX},{$i}";
+            for ($i = $posX; $i <= $lastCol; $i++) {
+                $table[] = "{$posY},{$i}";
             }
-            $posX++;
-            for ($i = $posX; $i <= $lastRow; $i++) {
+            $posY++;
+            for ($i = $posY; $i <= $lastRow; $i++) {
                 $table[] = "{$i},{$lastCol}";
             }
             $lastCol--;
-            if ($posX <= $lastRow) {
-                for ($i = $lastCol; $i >= $posY; $i--) {
+            if ($posY <= $lastRow) {
+                for ($i = $lastCol; $i >= $posX; $i--) {
                     $table[] = "{$lastRow},{$i}";
                 }
                 $lastRow--;
             }
-            if ($posY <= $lastCol) {
-                for ($i = $lastRow; $i >= $posX; $i--) {
-                    $table[] = "{$i},{$posY}";
+            if ($posX <= $lastCol) {
+                for ($i = $lastRow; $i >= $posY; $i--) {
+                    $table[] = "{$i},{$posX}";
                 }
-                $posY++;
+                $posX++;
             }
 
         }
@@ -138,11 +136,16 @@ if ($_POST['x']<2 || $_POST['y']<2){
     for ($i = 0; $i < $x; $i++) {
         echo "<tr>";
         for ($j = 0; $j < $y; $j++) {
+            if ($i==0 && $j==0){
+                $v = array_search("{$i},{$j}", $table) + 1;
+                echo "<td style='background-color:#888;'>{$v}</td>";
+            }else{
             $v = array_search("{$i},{$j}", $table) + 1;
             echo "<td>{$v}</td>";
+            }
         }
         echo "</tr>";
-    }
+
 }
 ?>
 </table>
